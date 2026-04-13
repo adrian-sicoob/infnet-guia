@@ -19,7 +19,6 @@ export function StudyDashboard({ items }: StudyDashboardProps) {
 
     const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0
 
-    // Group by category
     const byCategory = items.reduce(
       (acc, item) => {
         const category = item.category || "Sem categoria"

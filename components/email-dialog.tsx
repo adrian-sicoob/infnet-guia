@@ -24,7 +24,6 @@ export function EmailDialog({ onEmailSaved }: EmailDialogProps) {
   const [isValid, setIsValid] = useState(false)
 
   useEffect(() => {
-    // Verificar se o email já está armazenado
     const savedEmail = localStorage.getItem("userEmail")
 
     if (!savedEmail) {
@@ -35,7 +34,6 @@ export function EmailDialog({ onEmailSaved }: EmailDialogProps) {
   }, [onEmailSaved])
 
   useEffect(() => {
-    // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     setIsValid(emailRegex.test(email))
   }, [email])
@@ -43,14 +41,9 @@ export function EmailDialog({ onEmailSaved }: EmailDialogProps) {
   const handleSaveEmail = () => {
     if (!isValid) return
 
-    // Salvar no localStorage e sessionStorage
     localStorage.setItem("userEmail", email)
     sessionStorage.setItem("userEmail", email)
-
-    // Notificar o componente pai
     onEmailSaved(email)
-
-    // Fechar o diálogo
     setOpen(false)
   }
 

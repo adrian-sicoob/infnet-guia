@@ -31,7 +31,6 @@ export function StudyForm({ onAddItem, onUpdateItem, editingItem, onCancelEdit }
   const [pdfFile, setPdfFile] = useState<File | null>(null)
   const [pdfFileName, setPdfFileName] = useState("")
 
-  // Reset form or populate with editing values
   useEffect(() => {
     if (editingItem) {
       setSubject(editingItem.subject)
@@ -70,7 +69,6 @@ export function StudyForm({ onAddItem, onUpdateItem, editingItem, onCancelEdit }
       ? { pdfBase64: URL.createObjectURL(pdfFile), pdfFileName: pdfFile.name }
       : { pdfBase64: editingItem?.pdfBase64 || "", pdfFileName: pdfFileName || "" }
 
-    // Determine the final institution value
     const finalInstitution = institution === "Outra" && otherInstitution ? otherInstitution : institution
 
     if (editingItem) {

@@ -30,7 +30,6 @@ export function StudySuggestions({ onAddSuggestedItems }: StudySuggestionsProps)
     return areaMatch && levelMatch && searchMatch
   })
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredStudyPaths.length / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
@@ -38,7 +37,6 @@ export function StudySuggestions({ onAddSuggestedItems }: StudySuggestionsProps)
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
-    // Reset selection when changing pages
     setSelectedPath(null)
   }
 
@@ -168,7 +166,6 @@ export function StudySuggestions({ onAddSuggestedItems }: StudySuggestionsProps)
         ))}
       </div>
 
-      {/* Pagination controls */}
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-4">
           <Button
@@ -221,7 +218,6 @@ export function StudySuggestions({ onAddSuggestedItems }: StudySuggestionsProps)
   )
 }
 
-// Badge component to show level
 function Badge({ level }: { level: string }) {
   let color = ""
   let text = ""

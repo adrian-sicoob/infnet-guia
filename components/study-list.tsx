@@ -20,7 +20,6 @@ export function StudyList({ items, onDelete, onUpdateStatus, onEdit }: StudyList
   const [categoryFilter, setCategoryFilter] = useState("")
   const [statusFilter, setStatusFilter] = useState("")
 
-  // Group items by category
   const groupedItems = items.reduce(
     (acc, item) => {
       const category = item.category || "Sem categoria"
@@ -33,7 +32,6 @@ export function StudyList({ items, onDelete, onUpdateStatus, onEdit }: StudyList
     {} as Record<string, StudyItem[]>,
   )
 
-  // Filter items based on search term and filters
   const filteredGroups = Object.entries(groupedItems)
     .filter(([category]) => {
       if (!categoryFilter) return true

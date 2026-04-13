@@ -18,21 +18,18 @@ export function StudyGuideApp() {
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const { toast } = useToast()
 
-  // Load data from localStorage on initial render
   useEffect(() => {
     const savedItems = localStorage.getItem("infnetStudyItems")
     if (savedItems) {
       setStudyItems(JSON.parse(savedItems))
     }
 
-    // Verificar se o email já está armazenado
     const savedEmail = localStorage.getItem("userEmail")
     if (savedEmail) {
       setUserEmail(savedEmail)
     }
   }, [])
 
-  // Save to localStorage whenever studyItems changes
   useEffect(() => {
     localStorage.setItem("infnetStudyItems", JSON.stringify(studyItems))
   }, [studyItems])
@@ -45,7 +42,6 @@ export function StudyGuideApp() {
     const newItem = { ...item, id: Date.now().toString() }
     setStudyItems([...studyItems, newItem])
 
-    // Criar evento no Google Calendar
     if (userEmail) {
       createCalendarEvent(newItem)
     }
@@ -66,14 +62,10 @@ export function StudyGuideApp() {
   }
 
   const createCalendarEvent = (item: StudyItem) => {
-    // Calcular datas de início e fim
     const startDate = calculateNextStudyDate(item.periodicity)
     const endDate = calculateEndDate(startDate, item.duration)
-
-    // Obter regra de recorrência com base na periodicidade
     const recurrence = getRecurrenceRule(item.periodicity)
 
-    // Criar descrição
     const description = `
       Matéria: ${item.subject}
       Categoria: ${item.category || "Não especificada"}
@@ -84,7 +76,6 @@ export function StudyGuideApp() {
       ${item.studyLinks ? `Links de estudo: ${item.studyLinks}` : ""}
     `.trim()
 
-    // Criar link para o Google Calendar
     const calendarLink = createGoogleCalendarLink({
       title: `Estudo: ${item.subject}`,
       description,
@@ -94,10 +85,8 @@ export function StudyGuideApp() {
       recurrence: recurrence,
     })
 
-    // Abrir link em nova aba
     window.open(calendarLink, "_blank")
 
-    // Mostrar toast de confirmação
     toast({
       title: "Evento criado no Google Agenda",
       description: `Um evento recorrente para estudar "${item.subject}" foi criado no seu Google Agenda.`,
