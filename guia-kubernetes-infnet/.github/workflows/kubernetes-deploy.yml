@@ -65,6 +65,7 @@ jobs:
           set -euo pipefail
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/prometheus.yaml
+          kubectl apply -f k8s/redis.yaml
 
       - name: Aguardar rollout
         run: |
@@ -72,7 +73,8 @@ jobs:
           kubectl rollout status deployment/guia-app -n "$K8S_NAMESPACE" --timeout=300s
           kubectl rollout status deployment/prometheus -n "$K8S_NAMESPACE" --timeout=300s
           kubectl rollout status deployment/grafana -n "$K8S_NAMESPACE" --timeout=300s
-          kubectl get pods,svc -n "$K8S_NAMESPACE"
+          kubectl rollout status deployment/redis -n "$K8S_NAMESPACE" --timeout=120s
+          kubectl get pods,svc,pvc -n "$K8S_NAMESPACE"
 
   # ---------------------------------------------------------------------------
   # Job opcional — descomente o bloco "needs" em deploy se quiser build antes.

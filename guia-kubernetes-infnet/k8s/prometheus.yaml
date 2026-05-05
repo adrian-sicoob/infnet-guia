@@ -1,3 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-data
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+
+---
 # Prometheus — aplicar depois de deployment.yaml (namespace default).
 # Sidecar node_exporter: métricas do nó (CPU, RAM, disco) via hostPath /proc, /sys, /.
 # O scrape usa localhost — mesmo network namespace do pod; escopo = nó onde o Prometheus roda.
@@ -111,7 +124,8 @@ spec:
           configMap:
             name: prometheus-config
         - name: data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: prometheus-data
         - name: proc
           hostPath:
             path: /proc
